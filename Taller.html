@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Alcoholimetro</title>
+<style>
+    body {
+        background-color: #f0f0f0;
+        font-family: Arial,sans-serif;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        }
+
+    .road {
+        width: 100%;
+        height: 200px;
+        background: #555;
+        position: relative;
+        overflow: hidden;
+        margin-top: 50px;
+        border-radius: 10px;
+        }
+
+    .car {
+        width: 100px;
+        height: 50px;
+        background-color: red;
+        position: absolute;
+        bottom: 20px;
+        left: -120px;/* Inicialmente fuera de la pantalla */
+        border-radius: 10px;
+        transition: left 3s linear;
+        }
+
+    .car.moving {
+        left: 100%;
+        }
+
+    .controls {
+        margin-top: 20px;
+        }
+
+    .status {
+        margin-top: 20px;
+        font-size: 1.2em;
+        height: 1.2em;
+        }
+
+    /* Estilos para mostrar advertencia */
+    .warning {
+        color: red;
+        font-weight: bold;
+        }
+
+    .success {
+        color: green;
+        font-weight: bold;
+        }
+
+    /* Botón estilizado */
+    button {
+        padding: 10px 20px;
+        font-size: 1em;
+        border: none;
+        border-radius: 5px;
+        background-color: #007BFF;
+        color: white;
+        cursor: pointer;
+        }
+
+    button:hover {
+        background-color: #0056b3;
+        }
+        </style>
+    </head>
+    <body>
+
+    <h1>Alcoholimetro</h1>
+    <div class="road">
+        <div class="car" id="car"></div>
+    </div>
+
+
+    <div class="controls">
+        <button id="startButton">Iniciar</button>
+    </div>
+
+    <div class="status" id="statusMessage"></div>
+
+    <script>
+    const startButton = document.getElementById('startButton');
+    const car = document.getElementById('car');
+    const statusMessage = document.getElementById('statusMessage');
+
+
+    startButton.addEventListener('click', () => {
+        // Reiniciar posición del auto
+        car.classList.remove('moving');
+        // Limpiar mensajes anteriores
+        statusMessage.textContent = '';
+        statusMessage.classList.remove('warning', 'success');
+        
+    // Generar un valor aleatorio entre 0 y 100
+    const valor = Math.floor(Math.random() * 100) + 1;
+    console.log('Valor generado:', valor);
+
+
+    // Definir umbral para encender el auto
+    const umbral = 60; // Puedes ajustar este valor
+    
+    if (valor >= umbral) {
+        // Encender y mover el auto
+        statusMessage.textContent = '¡Auto encendido y en marcha!';
+        setTimeout(() => {
+            car.classList.add('moving');}, 100); // Pequeña espera para asegurar que la clase se aplique correctamente
+            } else {
+                // No encender el auto y mostrar advertencia
+                statusMessage.textContent = 'No se pudo encender el auto. ¡Ten cuidado!';
+                statusMessage.classList.add('warning');}
+            });
+    // Opcional: Reiniciar el auto al finalizar la animación
+car.addEventListener('transitionend', () => {
+    // Remover la clase 'moving' para reiniciar la posición
+    car.classList.remove('moving');
+    });
+</script>
+</body>
+</html>       
